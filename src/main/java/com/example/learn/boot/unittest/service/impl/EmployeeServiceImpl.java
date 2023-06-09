@@ -50,10 +50,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return null;
     }
-
-
-
-
     @Override
     public EmployeeDTO updateEmployee(Long id, EmployeeDTO updatedEmployee) {
         PersistentEmployeeEntity existingEntity = employeeRepository.findById(id).orElse(null);

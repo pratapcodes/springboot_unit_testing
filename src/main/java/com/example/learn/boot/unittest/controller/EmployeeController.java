@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/employee")
@@ -17,7 +19,10 @@ public class EmployeeController {
     @GetMapping({"/list"})
     @ResponseBody
     public ResponseEntity employeeList() {
-
+        List<EmployeeDTO> employeeDTO = employeeService.listAll();
+        if(employeeDTO.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(employeeService.listAll());
     }
 
@@ -63,10 +68,23 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         } else {
             EmployeeDTO updatedEmployeeDTO = employeeService.updateEmployee(id, employeeDTO);
-            if (updatedEmployeeDTO.getEmail()== null|| updatedEmployeeDTO.getName()==null) {
+            if (updatedEmployeeDTO.getEmail()== null || updatedEmployeeDTO.getName()==null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             }
             return ResponseEntity.status(HttpStatus.OK).body(updatedEmployeeDTO);
         }
     }
 }
+
+
+
+//    @GetMapping({"/", "/list"})
+//    @ResponseBody
+//    public ResponseEntity <List<EmployeeDTO>> employeeList() {
+//        List<EmployeeDTO> employeeDTO = employeeService.listAll();
+//        if(employeeDTO.isEmpty()){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body(employeeDTO);
+//
+//    }

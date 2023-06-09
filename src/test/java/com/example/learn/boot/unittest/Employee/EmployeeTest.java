@@ -63,6 +63,14 @@ public class EmployeeTest extends UnitTestApplicationTests {
                 .andExpect(jsonPath("$[1].phone").value("11111"));
     }
     @Test
+    public void listAll_NotFound() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/employee/list")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+
+    }
+    @Test
     public void getEmployeeById() throws Exception {
         createEmployee("abc", "htd", "abc@gmail.com", "123");
         createEmployee("fish", "water", "fishwater@gmail.com", "11111");
